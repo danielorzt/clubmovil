@@ -6,35 +6,39 @@ export type RootStackParamList = {
   // Main Stack
   MainTabs: undefined;
   
-  // Actividades Stack
+  // Activities Stack
   ActivityDetails: { id: string };
   ActivityCreate: undefined;
   ActivityEdit: { id: string };
-  Actividades: undefined;
+  Activities: undefined;
   
-  // Asociados Stack
-  Asociados: undefined;
+  // Members Stack
+  Members: undefined;
+  MemberCreate: undefined;
+  MemberEdit: { id: string };
+  MemberDetails: { id: string };
   
-  // Pagos Stack
-  Pagos: undefined;
+  // Payments Stack
+  Payments: undefined;
+  PaymentCreate: undefined;
+  PaymentEdit: { id: string };
+  PaymentDetails: { id: string };
   
-  // Participaciones Stack
-  ParticipacionDetail: { id: number };
-  ParticipacionCreate: undefined;
-  ParticipacionEdit: { id: number };
+  // Loans Stack
+  Loans: undefined;
+  LoanCreate: undefined;
+  LoanEdit: { id: string };
+  LoanDetails: { id: string };
   
-  // Prestamos Stack
-  PrestamoDetail: { id: number };
-  PrestamoCreate: undefined;
-  PrestamoEdit: { id: number };
-  
-  // New routes
-  AsociadoCreate: undefined;
+  // Participations Stack
+  ParticipationDetail: { id: number };
+  ParticipationCreate: undefined;
+  ParticipationEdit: { id: number };
 };
 
 export type AuthStackParamList = {
   Login: undefined;
-  Registro: undefined;
+  Register: undefined;
 };
 
 export type MainStackParamList = {
@@ -45,8 +49,6 @@ export type MainStackParamList = {
 
 export type MainTabParamList = {
   Home: undefined;
-  Actividades: undefined;
-  Asociados: undefined;
-  Prestamos: undefined;
-  Pagos: undefined;
+  Profile: undefined;
+  Settings: undefined;
 }; 

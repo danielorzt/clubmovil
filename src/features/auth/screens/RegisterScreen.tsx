@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Alert,
 } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../../../src/types/navigation";
@@ -16,14 +17,24 @@ import { RootStackParamList } from "../../../../src/types/navigation";
 type Props = NativeStackScreenProps<RootStackParamList, "Register">;
 
 export const RegisterScreen = ({ navigation }: Props) => {
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleRegister = () => {
     // TODO: Implement actual registration logic
-    navigation.replace("Home");
+    if (!email || !password || !confirmPassword) {
+      Alert.alert("Error", "Please fill in all fields");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      Alert.alert("Error", "Passwords do not match");
+      return;
+    }
+
+    // If registration is successful, navigate to login
+    navigation.replace("Login");
   };
 
   return (
@@ -34,42 +45,44 @@ export const RegisterScreen = ({ navigation }: Props) => {
       >
         <ScrollView contentContainerStyle={styles.scrollView}>
           <View style={styles.formContainer}>
-            <Text style={styles.title}>Crear Cuenta</Text>
+            <Text style={styles.title}>Create Account</Text>
 
-            <TextInput
-              style={styles.input}
-              placeholder="Nombre completo"
-              value={name}
-              onChangeText={setName}
-            />
+            <View style={styles.spaceY2}>
+              <Text style={styles.textGray600}>Email</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Enter your email"
+                value={email}
+                onChangeText={setEmail}
+                keyboardType="email-address"
+                autoCapitalize="none"
+              />
+            </View>
 
-            <TextInput
-              style={styles.input}
-              placeholder="Correo electrónico"
-              value={email}
-              onChangeText={setEmail}
-              keyboardType="email-address"
-              autoCapitalize="none"
-            />
+            <View style={styles.spaceY2}>
+              <Text style={styles.textGray600}>Password</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Enter your password"
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry
+              />
+            </View>
 
-            <TextInput
-              style={styles.input}
-              placeholder="Contraseña"
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry
-            />
-
-            <TextInput
-              style={styles.input}
-              placeholder="Confirmar contraseña"
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-              secureTextEntry
-            />
+            <View style={styles.spaceY2}>
+              <Text style={styles.textGray600}>Confirm Password</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Confirm your password"
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+                secureTextEntry
+              />
+            </View>
 
             <TouchableOpacity style={styles.button} onPress={handleRegister}>
-              <Text style={styles.buttonText}>Registrarse</Text>
+              <Text style={styles.buttonText}>Register</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -77,7 +90,7 @@ export const RegisterScreen = ({ navigation }: Props) => {
               onPress={() => navigation.navigate("Login")}
             >
               <Text style={styles.loginText}>
-                ¿Ya tienes cuenta? Inicia sesión aquí
+                Already have an account? Login
               </Text>
             </TouchableOpacity>
           </View>
@@ -136,5 +149,11 @@ const styles = StyleSheet.create({
   loginText: {
     color: "#f4511e",
     fontSize: 16,
+  },
+  spaceY2: {
+    marginBottom: 20,
+  },
+  textGray600: {
+    color: "#6b7280",
   },
 });

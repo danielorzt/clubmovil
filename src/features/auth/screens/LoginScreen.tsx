@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../../../src/types/navigation";
@@ -20,7 +21,11 @@ export const LoginScreen = ({ navigation }: Props) => {
 
   const handleLogin = () => {
     // TODO: Implement actual login logic
-    navigation.replace("MainTabs");
+    if (email && password) {
+      navigation.replace("MainTabs");
+    } else {
+      Alert.alert("Error", "Please fill in all fields");
+    }
   };
 
   return (

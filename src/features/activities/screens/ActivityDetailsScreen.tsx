@@ -1,39 +1,42 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, Alert } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../../../src/types/navigation";
-import { Actividad } from "../../../../src/types/actividad";
+import { RootStackParamList } from "../../../types/navigation";
+import { Activity } from "../../../types/activity";
 
-type Props = NativeStackScreenProps<RootStackParamList, "ActividadDetail">;
+type Props = NativeStackScreenProps<RootStackParamList, "ActivityDetails">;
 
-export const ActividadDetailScreen = ({ route, navigation }: Props) => {
+export const ActivityDetailsScreen = ({ route, navigation }: Props) => {
   const { id } = route.params;
-  const [actividad, setActividad] = useState<Actividad | null>(null);
+  const [activity, setActivity] = useState<Activity | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // TODO: Implement API call to fetch actividad details
-    // For now, using mock data
-    setActividad({
+    // TODO: Implement API call to fetch activity details
+    // For now using mock data
+    setActivity({
       id,
-      Nombre_Actividad: "Reunión Mensual",
-      Fecha_Actividad: "2024-03-20",
-      Total_Recaudado: 1500000,
+      name: "Monthly Meeting",
+      description: "Regular monthly meeting",
+      date: new Date(),
+      location: "Main Hall",
+      maxCapacity: 50,
+      status: "active",
     });
     setIsLoading(false);
   }, [id]);
 
   const handleDelete = () => {
     Alert.alert(
-      "Eliminar Actividad",
-      "¿Estás seguro de que deseas eliminar esta actividad?",
+      "Delete Activity",
+      "Are you sure you want to delete this activity?",
       [
         {
-          text: "Cancelar",
+          text: "Cancel",
           style: "cancel",
         },
         {
-          text: "Eliminar",
+          text: "Delete",
           style: "destructive",
           onPress: () => {
             // TODO: Implement delete API call
@@ -44,10 +47,10 @@ export const ActividadDetailScreen = ({ route, navigation }: Props) => {
     );
   };
 
-  if (isLoading || !actividad) {
+  if (isLoading || !activity) {
     return (
       <View className="flex-1 justify-center items-center">
-        <Text>Cargando...</Text>
+        <Text>Loading...</Text>
       </View>
     );
   }
@@ -57,16 +60,21 @@ export const ActividadDetailScreen = ({ route, navigation }: Props) => {
       <View className="space-y-4">
         <View className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
           <Text className="text-2xl font-bold text-gray-800 mb-4">
-            {actividad.Nombre_Actividad}
+            {activity.name}
           </Text>
 
           <View className="space-y-2">
             <Text className="text-gray-600">
-              Fecha: {new Date(actividad.Fecha_Actividad).toLocaleDateString()}
+              Description: {activity.description}
             </Text>
             <Text className="text-gray-600">
-              Total Recaudado: ${actividad.Total_Recaudado.toLocaleString()}
+              Date: {new Date(activity.date).toLocaleDateString()}
             </Text>
+            <Text className="text-gray-600">Location: {activity.location}</Text>
+            <Text className="text-gray-600">
+              Max Capacity: {activity.maxCapacity}
+            </Text>
+            <Text className="text-gray-600">Status: {activity.status}</Text>
           </View>
         </View>
 
@@ -74,19 +82,17 @@ export const ActividadDetailScreen = ({ route, navigation }: Props) => {
           <TouchableOpacity
             className="flex-1 bg-blue-500 p-4 rounded-lg"
             onPress={() =>
-              navigation.navigate("ActividadEdit", { id: actividad.id })
+              navigation.navigate("ActivityEdit", { id: activity.id })
             }
           >
-            <Text className="text-white text-center font-semibold">Editar</Text>
+            <Text className="text-white text-center font-semibold">Edit</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             className="flex-1 bg-red-500 p-4 rounded-lg"
             onPress={handleDelete}
           >
-            <Text className="text-white text-center font-semibold">
-              Eliminar
-            </Text>
+            <Text className="text-white text-center font-semibold">Delete</Text>
           </TouchableOpacity>
         </View>
       </View>

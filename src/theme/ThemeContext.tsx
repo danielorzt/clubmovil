@@ -26,10 +26,14 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const colors = getThemeColors(isDark);
 
+  const value = {
+    isDark,
+    toggleTheme,
+    colors,
+  };
+
   return (
-    <ThemeContext.Provider value={{ isDark, toggleTheme, colors }}>
-      {children}
-    </ThemeContext.Provider>
+    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
   );
 };
 
